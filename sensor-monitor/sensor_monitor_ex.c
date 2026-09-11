@@ -4,7 +4,8 @@
 
 int main() {
     char input[20];
-    int curr_temp;
+    char *endptr;
+    long curr_temp;
 
     while(1) {
         printf("Temperature: ");
@@ -18,11 +19,16 @@ int main() {
             break;
         }
 
-        curr_temp = atoi(input);
+        curr_temp = strtol(input, &endptr, 10);
 
-        if(curr_temp > 32 && curr_temp < 75) {
+        if (endptr == input || *endptr != '\0') {
+            printf("invalid input - enter a number or q to quit:\n");
+            continue;
+        }
+
+        if(curr_temp >= 32 && curr_temp <= 75) {
             printf("NORMAL\n");
-        } else if((curr_temp > 75 && curr_temp < 90) || (curr_temp < 32 && curr_temp > 0)) {
+        } else if((curr_temp > 75 && curr_temp <= 90) || (curr_temp < 32 && curr_temp > 0)) {
             printf("WARNING\n");
         } else {
             printf("CRITICAL\n");
